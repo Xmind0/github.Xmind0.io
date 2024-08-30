@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的GitHub主页</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .intro {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #333;
+            background-color: #f0f0f0;
+        }
+        .intro h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            min-height: 1.2em;
+        }
+        .intro p {
+            font-size: 1.5em;
+            max-width: 600px;
+            line-height: 1.6;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .enter-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            opacity: 0;
+        }
+        .enter-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <div>
+            <h1 id="animated-text"></h1>
+            <p id="intro-text">在这里，我将分享我的想法、经验和知识。每一步都是一次探索，每一天都是一次成长。</p>
+            <a href="main.html" class="enter-button" id="enter-button">进入我的主页</a>
+        </div>
+    </div>
+
+    <script>
+        const text = "欢迎来到我的世界";
+        const animatedText = document.getElementById('animated-text');
+        const introText = document.getElementById('intro-text');
+        const enterButton = document.getElementById('enter-button');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < text.length) {
+                animatedText.innerHTML += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 150); // 调整这个数值可以改变打字速度
+            } else {
+                // 动画完成后，显示介绍文字和按钮
+                setTimeout(() => {
+                    introText.style.opacity = '1';
+                    enterButton.style.opacity = '1';
+                }, 500);
+            }
+        }
+
+        // 开始动画
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>
