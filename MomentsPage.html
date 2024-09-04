@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified Moments</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .header {
+            background-color: #ededed;
+            padding: 10px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .profile {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .cover-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .profile-info {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: white;
+            text-align: right;
+        }
+        .profile-pic {
+            width: 70px;
+            height: 70px;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+        .post {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .post-content {
+            margin-bottom: 10px;
+        }
+        .post-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .post-image {
+            width: calc(33.333% - 5px);
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8em;
+            color: #888;
+        }
+        .likes-comments {
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            padding: 5px;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) {
+            .content {
+                padding: 10px;
+            }
+            .post-image {
+                width: calc(50% - 5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>朋友圈</h1>
+    </div>
+    <div class="content">
+        <div class="profile">
+            <img src="/api/placeholder/600/200" alt="Cover Image" class="cover-image">
+            <div class="profile-info">
+                <p>摆渡人</p>
+                <img src="/api/placeholder/70/70" alt="Profile Picture" class="profile-pic">
+            </div>
+        </div>
+        <div id="posts-container"></div>
+    </div>
+
+    <script>
+        const posts = [
+            {
+                name: "1号选手",
+                avatar: "/api/placeholder/40/40",
+                content: "今天周四啦",
+                images: ["/api/placeholder/200/200"],
+                time: "1小时前",
+                likes: ["摆渡人"],
+                comments: [
+                    { name: "1号选手", content: "又是一个周四！" }
+                ]
+            },
+            {
+                name: "2号选手",
+                avatar: "/api/placeholder/40/40",
+                content: "每天早上一杯怀姜杏仁臻白饮，开脾健胃，润而不燥，还能提升身体的基础代谢～",
+                images: ["/api/placeholder/200/200", "/api/placeholder/200/200"],
+                time: "13分钟前",
+                likes: ["2.1选手", "2.2选手"],
+                comments: [
+                    { name: "2.3选手", content: "天空真好看" }
+                ]
+            },
+            {
+                name: "3号选手",
+                avatar: "/api/placeholder/40/40",
+                content: "天空很好看呀！",
+                images: ["/api/placeholder/200/200", "/api/placeholder/200/200", "/api/placeholder/200/200"],
+                time: "1小时前",
+                likes: ["3.1选手", "3.2选手", "3.3选手", "3.4选手", "摆渡人"],
+                comments: [
+                    { name: "11111", content: "下次不要这样了" },
+                    { name: "22222", content: "下次不要这样了" },
+                    { name: "33333", content: "谢谢你们" }
+                ]
+            }
+        ];
+
+        function renderPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = posts.map(post => `
+                <div class="post">
+                    <div class="post-header">
+                        <img src="${post.avatar}" alt="${post.name}" class="post-avatar">
+                        <h3>${post.name}</h3>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    <div class="post-images">
+                        ${post.images.map(img => `<img src="${img}" alt="Post image" class="post-image">`).join('')}
+                    </div>
+                    <div class="post-footer">
+                        <span>${post.time}</span>
+                        <button onclick="toggleLikesComments(this)">赞 · 评论</button>
+                    </div>
+                    <div class="likes-comments" style="display: none;">
+                        <p>赞: ${post.likes.join(', ')}</p>
+                        ${post.comments.map(comment => `<p>${comment.name}: ${comment.content}</p>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleLikesComments(button) {
+            const likesComments = button.parentElement.nextElementSibling;
+            likesComments.style.display = likesComments.style.display === 'none' ? 'block' : 'none';
+        }
+
+        renderPosts();
+    </script>
+</body>
+</html>
